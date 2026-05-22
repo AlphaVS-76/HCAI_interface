@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <h2>Simple LLaMA Chatbot</h2>
+
+    <input id="input" placeholder="Type something..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <p id="response"></p>
+
+    <script>
+      async function sendMessage() {
+        const message = document.getElementById("input").value;
+
+        const res = await fetch("http://localhost:3000/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        });
+
+        const data = await res.json();
+        document.getElementById("response").innerText =
+          data.reply || "No response";
+      }
+    </script>
+  </body>
+</html>
